@@ -101,6 +101,7 @@ MANAGERS = ADMINS
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
     'default': env.db('DATABASE_URL', default='postgres://postgres:c0mput3r@127.0.0.1:5432/tasklist'),
+    'production': env.db('DATABASE_URL', default='postgres://cfxifshnrgssew:afb87e679d4fcbc61f0534548907d25fca04b0581a3295e0d39fd7118b091e28@ec2-107-22-223-6.compute-1.amazonaws.com:5432/d2n37a0fddmd9a'),
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
