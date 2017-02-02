@@ -47,6 +47,7 @@ LOCAL_APPS = (
     # custom users app
     'tasklist.users.apps.UsersConfig',
     # Your stuff: custom apps go here
+    'tasklist.tasks',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
