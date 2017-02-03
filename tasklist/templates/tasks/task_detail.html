@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="post">
+        {% if task.created_on %}
+            <div class="date">
+                {{ post.created_on }}
+            </div>
+        {% endif %}
+        <a class="btn btn-default" href="{% url 'task_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+        <h1>{{ task.title }}</h1>
+        <p>{{ task.description|linebreaksbr }}</p>
+    </div>
+{% endblock %}
