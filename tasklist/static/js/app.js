@@ -1,81 +1,117 @@
 var myApp = angular.module('CreateTaskApp', []);
 
-myApp.controller("CreateTaskController",function($scope, $http)
- {
-   $scope.happy = "hello";
-   $scope.createTask = function(task){
-     var config = {
-             headers : {
-                 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-                 }
-             }
+myApp.controller("CreateTaskController", function($scope, $http) {
+    $scope.happy = "hello";
+    $scope.createTask = function(task) {
+        var config = {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+            }
+        }
 
-     var post_url = '/tasks/api/' ;
-     $http.put(post_url,
-                 "done="+encodeURIComponent('N') +
-                 "&title="+encodeURIComponent(task.title) +
-                 "&description="+encodeURIComponent(task.description),
+        var post_url = '/tasks/api/';
+        $http.put(post_url,
+            "done=" + encodeURIComponent('N') +
+            "&title=" + encodeURIComponent(task.title) +
+            "&description=" + encodeURIComponent(task.description),
 
-                  config
-                ).success(function(response){
-                 console.log(response);
-                 $scope.SuccessMessage = "Task created";
-                 $scope.task.title ="";
-                 $scope.task.description="";
-                 },function errorCallback(response) {
-                     console.log(response);
-                 });
-   }
+            config
+        ).success(function(response) {
+            console.log(response);
+            $scope.SuccessMessage = "Task created";
+            $scope.task.title = "";
+            $scope.task.description = "";
+        }, function errorCallback(response) {
+            console.log(response);
+        });
+    }
 
- });
+});
 
 var myApp = angular.module('TaskApp', []);
 
-myApp.controller("MyController",function($scope, $http)
- {
-   $http.get('/tasks/api/?format=json').success(function(response){
+myApp.controller("MyController", function($scope, $http) {
+            $http.get('/tasks/api/?format=json').success(function(response) {
 
-   $scope.tasks = response;
+                $scope.tasks = response;
 
-    // Update model
-    angular.forEach($scope.tasks, function(task) {
-      task.checked = task.done == 'Y'? 1 :0;
-      if (task.checked) {
-        task.myClass ="strikethrough";
-      }
-
-      });
-
-    $scope.updateTask = function(task){
-
-
-      elm =  document.querySelector( '#tasklist' + task.id  )
-      if(elm.classList.contains('strikethrough')){
-        angular.element(elm).removeClass('strikethrough');
-      }
-      else{
-        angular.element(elm).addClass('strikethrough');
-      }
-        task.done = task.checked ? 'N' : 'Y';
-        var config = {
-                headers : {
-                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                // Update model
+                 angular.forEach($scope.tasks, function(task) {
+                    task.checked = task.done == 'Y' ? 1 : 0;
+                    if (task.checked) {
+                        task.myClass = "strikethrough";
                     }
-                }
-        var post_url = '/tasks/api/' + task.id + '/';
-        $http.put(post_url,
-                    "done="+encodeURIComponent(task.done) +
-                    "&title="+encodeURIComponent(task.title) +
-                    "&description="+encodeURIComponent(task.description),
 
-                     config
-                   ).success(function(response){
-                    console.log(response);
-                    },function errorCallback(response) {
-                        console.log(response);
+                });
+
+                $scope.deleteTask = function(task) {
+                    if (confirm('Are you sure you want to delete this?')) {
+                        // TODO:  Do something here if the answer is "Ok".
+                        var delete_url = '/tasks/api/delete/' + task.id + '/';
+                        var config = {
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                            }
+                        }
+                        $http.delete(delete_url,
+                            '',
+                            config
+                        ).success(function(response) {
+                            $scope.refresh();
+                        }, function errorCallback(response) {
+                            console.log(response);
+                        });
+
+                        $scope.refresh = function() {
+                            $http.get('/tasks/api/?format=json')
+                                .success(function(data) {
+                                        $scope.tasks = data;
+
+                                        angular.forEach($scope.tasks, function(task) {
+                                           task.checked = task.done == 'Y' ? 1 : 0;
+                                           if (task.checked) {
+                                               task.myClass = "strikethrough";
+                                           }
+
+                                       });
+
+                                        });
+                                    }
+
+                                }
+
+
+                        }
+
+                        $scope.updateTask = function(task) {
+
+
+                            elm = document.querySelector('#tasklist' + task.id)
+                            if (elm.classList.contains('strikethrough')) {
+                                angular.element(elm).removeClass('strikethrough');
+                            } else {
+                                angular.element(elm).addClass('strikethrough');
+                            }
+                            task.done = task.checked ? 'N' : 'Y';
+                            var config = {
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                                }
+                            }
+                            var post_url = '/tasks/api/' + task.id + '/';
+                            $http.put(post_url,
+                                "done=" + encodeURIComponent(task.done) +
+                                "&title=" + encodeURIComponent(task.title) +
+                                "&description=" + encodeURIComponent(task.description),
+
+                                config
+                            ).success(function(response) {
+                                console.log(response);
+                            }, function errorCallback(response) {
+                                console.log(response);
+                            });
+                            task.myClass = task.checked ? "strikethrough" : "";
+                        };
+
                     });
-        task.myClass = task.checked ? "strikethrough" : "";
-        };
-
-    });
- });
+            });

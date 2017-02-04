@@ -48,7 +48,7 @@ def task_list(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['GET', 'PUT','POST' 'DELETE'])
+@api_view(['GET', 'PUT','POST','DELETE'])
 @permission_classes((permissions.AllowAny,))
 @method_decorator(csrf_exempt)
 @csrf_exempt
