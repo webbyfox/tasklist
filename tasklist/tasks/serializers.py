@@ -6,7 +6,7 @@ class TaskSerializer(serializers.Serializer):
     title = serializers.CharField(required=False, allow_blank=False, max_length=140)
     description = serializers.CharField(required=False, allow_blank=True)
     done = serializers.CharField(required=False)
-    created_by = serializers.CharField(required=True)
+    created_by = serializers.CharField(required=False)
 
 
     def create(self, validated_data):
