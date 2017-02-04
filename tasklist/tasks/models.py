@@ -7,6 +7,10 @@ def get_user():
     # current_user = auth.username
     return User.get_username()
 
+status_list =  (
+    ('N', 'UNDONE'),
+    ('Y', 'DONE'),
+)
 
 class MetaColumn(models.Model):
     created_by = models.CharField(max_length=64)
@@ -17,15 +21,16 @@ class MetaColumn(models.Model):
     class Meta:
         abstract = True
 
+
 class Task(MetaColumn):
-    status_list =  (
-        ('N', 'UNDONE'),
-        ('Y', 'DONE'),
-    )
+
 
     title = models.CharField(max_length = 250)
     description = models.TextField()
     done = models.CharField(max_length=1, default='N', choices = status_list)
+
+    class Meta:
+        ordering = ('created_on',)
 
     def __init__(self, *args, **kwargs):
         kwargs['created_by'] = 'admin'

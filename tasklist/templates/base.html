@@ -15,6 +15,8 @@
 
     {% block css %}
     <!-- Latest compiled and minified Bootstrap 4 Alpha 4 CSS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+    <script src="{% static 'js/app.js' %}"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css" integrity="sha384-2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous">
 
     <!-- Your stuff: Third-party CSS libraries go here -->
@@ -43,18 +45,13 @@
                 <a class="nav-link" href="{% url 'home' %}">Home</a>
               </li>
 
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'about' %}">About</a>
-              </li>
+          
             </ul>
 
             <ul class="nav navbar-nav pull-xs-right">
               {% if request.user.is_authenticated %}
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'users:detail' request.user.username  %}">{% trans "My Profile" %}</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'tasks:task_new' %}">{% trans "Create Task" %}</a>
                 </li>
 
                 <li class="nav-item">
@@ -83,7 +80,9 @@
       {% endif %}
 
       {% block content %}
-        <p>Use this document as a way to quick start any new project.</p>
+        <p>Welcome to Django based Tasklist app.</p>
+        <a href="/tasks/" class="primary btn btn-primary">All Tasks</a>
+
       {% endblock content %}
 
     </div> <!-- /container -->

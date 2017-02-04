@@ -10,7 +10,7 @@ from django.views import defaults as default_views
 
 urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name='home'),
-    url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
+    url(r'^create/$', TemplateView.as_view(template_name='pages/about.html'), name='create'),
 
     # Django Admin, use {% url 'admin:index' %}
     url(settings.ADMIN_URL, admin.site.urls),
@@ -21,7 +21,7 @@ urlpatterns = [
 
     # Your stuff: custom urls includes go here
    url(r'^tasks/', include('tasklist.tasks.urls', namespace='tasks')),
-
+   url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

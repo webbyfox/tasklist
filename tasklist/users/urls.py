@@ -3,7 +3,7 @@ from __future__ import absolute_import, unicode_literals
 
 from django.conf.urls import url
 from django.conf.urls import include
-
+from tasklist.tasks import views as taskview
 from . import views
 
 urlpatterns = [

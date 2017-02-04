@@ -73,4 +73,25 @@ See detailed `cookiecutter-django Heroku documentation`_.
 .. _`cookiecutter-django Heroku documentation`: http://cookiecutter-django.readthedocs.io/en/latest/deployment-on-heroku.html
 
 
+TODO
+^^^^
 
+* *Build a task list application in django.*
+* *Users will first login to their accounts.*
+* *Once they login, then should see a list of everyone’s tasks.*
+* *There is an “Add” button to add a new todo item.*
+* You can via the UI “Edit”, “Mark Done” or “Delete” a task.
+* Edit: Is editing the task name, description and status (done/undone) (only your own)
+* Mark Done: is changing the status of a task to “done” and record who did it.
+* Delete: is deleting a task (only your own)
+* There is a “Hide Completed tasks” button, click on that to filter out todo items that are already done.
+* Tests for the application. (We value good testing over complicated features)
+
+Additional notes:
+^^^^^^^^^^^^^^^^^
+* The frontend choices are entirely up to you.
+* There is no time constraint, when you’re happy with it, send it to us as well as how much time you spent on it.
+* Any extra feature you can add will be appreciated
+* Whatever you do send please do it to the best of your abilities, please be proud of what you send. Quality > Quantity.
+* (Optional) We appreciate when code is deployed somewhere public.
+* Setup of the project should be easy and detailed.

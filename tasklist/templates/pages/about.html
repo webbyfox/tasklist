@@ -1,1 +1,42 @@
 {% extends "base.html" %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<div ng-app="CreateTaskApp">
+
+  <h2>Create a Task</h2>
+  <div ng-controller="CreateTaskController">
+
+          {% verbatim %}
+        <div class="alert alert-success" role="alert" ng-show="SuccessMessage">
+  <strong> {{SuccessMessage}}</strong>
+</div>
+
+<form name="taskForm">
+          <div class="form-group row">
+            <label for="example-text-input" class="col-2 col-form-label">Title</label>
+            <div class="col-10">
+              <input class="form-control" name="title" ng-model="task.title" type="text" placeholder="Task title" id="example-text-input" required>
+
+            </div>
+            <label for="example-text-input" class="col-2 col-form-label">Description</label>
+            <div class="col-10">
+              <textarea class="form-control" ng-model="task.description" placeholder="Task description" type="text" id="example-text-input"></textarea>
+            </div>
+          </div>
+
+
+    <button type="submit" class="btn btn-primary" ng-click="createTask(task)">Submit</button>
+</fom>
+          {% endverbatim %}
+
+  </div>
+
+</div>
+
+{%else%}
+<p>Please sign in for createing and managing taskboard</p>
+{% endif %}
+
+
+{% endblock content %}

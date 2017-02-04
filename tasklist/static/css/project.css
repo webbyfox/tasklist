@@ -36,3 +36,6 @@
 [hidden][style="display: block;"] {
   display: block !important;
 }
+.strikethrough {
+  text-decoration: line-through;
+}
