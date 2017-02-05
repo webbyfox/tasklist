@@ -1,7 +1,11 @@
 var myApp = angular.module('CreateTaskApp', []);
 
+myApp.config(['$httpProvider', function($httpProvider) {
+    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+}]);
+
 myApp.controller("CreateTaskController", function($scope, $http) {
-    $scope.happy = "hello";
     $scope.createTask = function(task) {
         var config = {
             headers: {
@@ -9,38 +13,63 @@ myApp.controller("CreateTaskController", function($scope, $http) {
             }
         }
 
+        var get_url = '/tasks/api/current_user/'
+
+        $http.get(get_url).success(function(response) {
+            // console.log(response);
+            $scope.username = response.user;
+            // console.log($scope.username );
+
+            });
+
         var post_url = '/tasks/api/';
         $http.put(post_url,
             "done=" + encodeURIComponent('N') +
             "&title=" + encodeURIComponent(task.title) +
-            "&description=" + encodeURIComponent(task.description),
+            "&description=" + encodeURIComponent(task.description) +
+            "&created_by=" + encodeURIComponent($scope.username) +
+            "&amended_by=" + encodeURIComponent($scope.username)
+                ,
 
             config
         ).success(function(response) {
-            console.log(response);
             $scope.SuccessMessage = "Task created";
             $scope.task.title = "";
             $scope.task.description = "";
         }, function errorCallback(response) {
-            console.log(response);
-        });
+              });
     }
 
 });
 
-var myApp = angular.module('TaskApp', []);
+var myTaskApp = angular.module('TaskApp', []);
 
-myApp.controller("MyController", function($scope, $http) {
+myTaskApp.config(['$httpProvider', function($httpProvider) {
+    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+}]);
+
+
+myTaskApp.controller("MyController", function($scope, $http) {
+            // $http.defaults.headers.post['X-CSRFToken'] = $cookies.get('csrftoken');
+
+            var get_url = '/tasks/api/current_user/'
+            $http.get(get_url).success(function(response) {
+                $scope.username = response.user;
+                });
+
+
             $http.get('/tasks/api/?format=json').success(function(response) {
 
                 $scope.tasks = response;
-
+                // console.log($scope);
                 // Update model
                  angular.forEach($scope.tasks, function(task) {
                     task.checked = task.done == 'Y' ? 1 : 0;
                     if (task.checked) {
                         task.myClass = "strikethrough";
                     }
+                    
 
                 });
 
@@ -102,7 +131,8 @@ myApp.controller("MyController", function($scope, $http) {
                             $http.put(post_url,
                                 "done=" + encodeURIComponent(task.done) +
                                 "&title=" + encodeURIComponent(task.title) +
-                                "&description=" + encodeURIComponent(task.description),
+                                "&description=" + encodeURIComponent(task.description)+
+                                "&amended_by=" + encodeURIComponent($scope.username),
 
                                 config
                             ).success(function(response) {

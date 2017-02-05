@@ -8,7 +8,6 @@
 
 <div ng-app="TaskApp">
 
-  <!-- <a href="/tasks/" class="primary btn btn-primary">All Tasks</a> -->
 
    <h2>Tasks
 
@@ -27,13 +26,13 @@
           <div class="form-check">
             <label class="form-check-label">
 
-              <input class="form-check-input" type="checkbox" ng-checked="{{task.checked}}" ng-click="updateTask(task)" >
+              <input  class="form-check-input" type="checkbox" ng-checked="{{task.checked}}" ng-click="updateTask(task)" >
               <span id="tasklist{{task.id}}" class="{{task.myClass}}"><strong>{{ task.title }}</strong>  <a href="#" class="alert-link">{{task.description}}</a></span>
 
             </label>
             <span class="btn btn-danger pull-right"
-ng-click="deleteTask(task)">Delete</span>
-            <span class="btn btn-info pull-right">Edit</span>
+ng-click="deleteTask(task)" ng-show="username == task.created_by">Delete</span>
+            <span class="btn btn-info pull-right" ng-show="username == task.created_by">Edit</span>
           </div>
         </div>
 

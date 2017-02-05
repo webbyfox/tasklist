@@ -33,8 +33,10 @@ class Task(MetaColumn):
         ordering = ('created_on',)
 
     def __init__(self, *args, **kwargs):
-        kwargs['created_by'] = 'admin'
-        kwargs['amended_by'] = 'admin'
+        # kwargs['created_by'] = 'admin'
+        # kwargs['amended_by'] = 'admin'
+        # import pdb
+        # pdb.set_trace()
         super(Task, self).__init__(*args, **kwargs)
 
 

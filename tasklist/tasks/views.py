@@ -10,22 +10,10 @@ from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from .models import Task
-from .serializers import TaskSerializer
+from .serializers import TaskSerializer, UserSerializer
 from rest_framework import permissions
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-
-# class JSONResponse(HttpResponse):
-#     """
-#     An HttpResponse that renders its content into JSON.
-#     """
-#
-#     def __init__(self, data, **kwargs):
-#         content = JSONRenderer().render(data)
-#         kwargs['content_type'] = 'application/json'
-#         super(JSONResponse, self).__init__(content, **kwargs)
-
-
 
 
 @api_view(['GET', 'PUT', 'POST'])
@@ -37,7 +25,7 @@ def task_list(request):
     """
     if request.method == 'GET':
         tasks = Task.objects.all()
-        serializer = TaskSerializer(tasks, many=True)
+        serializer = TaskSerializer(tasks, many=True,context={'request': request})
         return Response(serializer.data)
 
     elif request.method == 'PUT':
@@ -76,28 +64,10 @@ def task_detail(request, pk):
         task.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-# @csrf_exempt
-# def task_detail(request, pk):
-#         """
-#         Retrieve, update or delete a code task.
-#         """
-#         try:
-#             task = Task.objects.get(pk=pk)
-#         except Task.DoesNotExist:
-#             return HttpResponse(status=404)
-#
-#         if request.method == 'GET':
-#             serializer = TaskSerializer(task)
-#             return JSONResponse(serializer.data)
-#
-#         elif request.method == 'PUT':
-#             data = JSONParser().parse(request)
-#             serializer = TaskSerializer(task, data=data)
-#             if serializer.is_valid():
-#                 serializer.save()
-#                 return JSONResponse(serializer.data)
-#             return JSONResponse(serializer.errors, status=400)
-#
-#         elif request.method == 'DELETE':
-#             task.delete()
-#             return HttpResponse(status=204)
+
+@api_view(['GET'])
+def current_user(request):
+    # data = request.data
+    # if data.is_valid():
+    serializer = UserSerializer(request)
+    return Response(serializer.data)
