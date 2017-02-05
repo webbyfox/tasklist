@@ -14,7 +14,7 @@ myApp.controller("CreateTaskController", function($scope, $http) {
 
     function(response) {
         $scope.username = response.user;
-        console.log(task.username);
+        // console.log(task.username);
     },
 
     function errorCallback(response) {
@@ -61,7 +61,7 @@ myTaskApp.config(['$httpProvider', function($httpProvider) {
 }]);
 
 
-myTaskApp.controller("MyController", function($scope, $http) {
+myTaskApp.controller("MyController", function($scope, $http, $filter) {
 
     var get_url = '/tasks/api/current_user/';
     $http.get(get_url).success(function(response) {
@@ -87,6 +87,15 @@ myTaskApp.controller("MyController", function($scope, $http) {
         $scope.editTask = function(task){
           alert("TODO# Need to implement");
         }
+
+        $scope.completedTask = function(){
+            $scope.tasks = $filter('filter')($scope.tasks, {done: "N"});
+
+        }
+
+        // $scope.allTasks = function(){
+        //     $scope.tasks = $filter('filter')($scope.tasks, {});
+        // }
 
         $scope.deleteTask = function(task) {
             if (confirm('Are you sure you want to delete this?')) {
