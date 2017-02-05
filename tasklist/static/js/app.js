@@ -7,7 +7,7 @@ myApp.config(['$httpProvider', function($httpProvider) {
 
 myApp.controller("CreateTaskController", function($scope, $http) {
     $scope.createTask = function(task) {
-        var config = {
+        var config = {x§
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
             }
@@ -22,7 +22,7 @@ myApp.controller("CreateTaskController", function($scope, $http) {
 
         });
 
-        var post_url = '/tasks/api/';
+        var post_url = $window.location.origin +'/tasks/api/';
         $http.put(post_url,
             "done=" + encodeURIComponent('N') +
             "&title=" + encodeURIComponent(task.title) +
@@ -51,7 +51,7 @@ myTaskApp.config(['$httpProvider', function($httpProvider) {
 myTaskApp.controller("MyController", function($scope, $http) {
     // $http.defaults.headers.post['X-CSRFToken'] = $cookies.get('csrftoken');
 
-    var get_url = '/tasks/api/current_user/'
+    var get_url = $window.location.origin +'/tasks/api/current_user/'
     $http.get(get_url).success(function(response) {
         $scope.username = response.user;
     });
@@ -90,7 +90,7 @@ myTaskApp.controller("MyController", function($scope, $http) {
                 });
 
                 $scope.refresh = function() {
-                    $http.get('/tasks/api/?format=json')
+                    $http.get($window.location.origin +'/tasks/api/?format=json')
                         .success(function(data) {
                             $scope.tasks = data;
 
