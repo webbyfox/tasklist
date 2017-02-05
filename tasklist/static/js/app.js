@@ -6,36 +6,49 @@ myApp.config(['$httpProvider', function($httpProvider) {
 }]);
 
 myApp.controller("CreateTaskController", function($scope, $http) {
+
+    $scope.getUsername = function() {
+
+    var get_current_url = '/tasks/api/current_user/';
+    $http.get(get_current_url).success(
+
+    function(response) {
+        $scope.username = response.user;
+        console.log(task.username);
+    },
+
+    function errorCallback(response) {
+        console.log(response);
+    });
+
+  }();
+
+
+
     $scope.createTask = function(task) {
-        var config = {x§
+        var config = {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
             }
         }
 
-        var get_url = '/tasks/api/current_user/'
 
-        $http.get(get_url).success(function(response) {
-            // console.log(response);
-            $scope.username = response.user;
-            // console.log($scope.username );
-
-        });
-
-        var post_url = $window.location.origin +'/tasks/api/';
+        var post_url ='/tasks/api/';
         $http.put(post_url,
             "done=" + encodeURIComponent('N') +
             "&title=" + encodeURIComponent(task.title) +
             "&description=" + encodeURIComponent(task.description) +
             "&created_by=" + encodeURIComponent($scope.username) +
             "&amended_by=" + encodeURIComponent($scope.username),
-
             config
         ).success(function(response) {
             $scope.SuccessMessage = "Task created";
             $scope.task.title = "";
             $scope.task.description = "";
-        }, function errorCallback(response) {});
+        }, function errorCallback(response)
+        {
+          console.log(response);
+        });
     }
 
 });
@@ -49,12 +62,12 @@ myTaskApp.config(['$httpProvider', function($httpProvider) {
 
 
 myTaskApp.controller("MyController", function($scope, $http) {
-    // $http.defaults.headers.post['X-CSRFToken'] = $cookies.get('csrftoken');
 
-    var get_url = $window.location.origin +'/tasks/api/current_user/'
+    var get_url = '/tasks/api/current_user/';
     $http.get(get_url).success(function(response) {
         $scope.username = response.user;
     });
+
 
 
     $http.get('/tasks/api/?format=json').success(function(response) {
@@ -71,9 +84,12 @@ myTaskApp.controller("MyController", function($scope, $http) {
 
         });
 
+        $scope.editTask = function(task){
+          alert("TODO# Need to implement");
+        }
+
         $scope.deleteTask = function(task) {
             if (confirm('Are you sure you want to delete this?')) {
-                // TODO:  Do something here if the answer is "Ok".
                 var delete_url = '/tasks/api/delete/' + task.id + '/';
                 var config = {
                     headers: {
@@ -90,7 +106,7 @@ myTaskApp.controller("MyController", function($scope, $http) {
                 });
 
                 $scope.refresh = function() {
-                    $http.get($window.location.origin +'/tasks/api/?format=json')
+                    $http.get('/tasks/api/?format=json')
                         .success(function(data) {
                             $scope.tasks = data;
 
@@ -110,10 +126,11 @@ myTaskApp.controller("MyController", function($scope, $http) {
 
         }
 
+
+
         $scope.updateTask = function(task) {
 
-
-            elm = document.querySelector('#tasklist' + task.id)
+           elm = document.querySelector('#tasklist' + task.id)
             if (elm.classList.contains('strikethrough')) {
                 angular.element(elm).removeClass('strikethrough');
             } else {

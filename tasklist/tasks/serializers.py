@@ -14,11 +14,8 @@ class TaskSerializer(serializers.Serializer):
     done = serializers.CharField(required=False)
     created_by = serializers.CharField(required=False)
     amended_by = serializers.CharField(required=False)
-    # current_username = serializers.SerializerMethodField()
-    # is_editable = serializers.SerializerMethodField()
-    # is_deletable = serializers.SerializerMethodField()
+    ordering_fields = ('created_by')
 
-    #
     # current_user = serializers.SerializerMethodField('_user', required=False)
     #
     # def _user(self, obj):

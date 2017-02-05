@@ -39,7 +39,7 @@ def task_list(request):
 @api_view(['GET', 'PUT','POST','DELETE'])
 @permission_classes((permissions.AllowAny,))
 @method_decorator(csrf_exempt)
-@csrf_exempt
+# @csrf_exempt
 def task_detail(request, pk):
     """
     Retrieve, update or delete a task instance.

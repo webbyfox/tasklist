@@ -24,13 +24,12 @@ class MetaColumn(models.Model):
 
 class Task(MetaColumn):
 
-
     title = models.CharField(max_length = 250)
     description = models.TextField()
     done = models.CharField(max_length=1, default='N', choices = status_list)
 
     class Meta:
-        ordering = ('created_on',)
+        ordering = ('-created_on',)
 
     def __init__(self, *args, **kwargs):
         # kwargs['created_by'] = 'admin'

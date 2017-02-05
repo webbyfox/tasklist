@@ -11,6 +11,7 @@ from . import views
 urlpatterns = [
     url(r'^api/$', views.task_list),
     url(r'^api/(?P<pk>[0-9]+)/$', views.task_detail),
+    # url(r'^edit/(?P<pk>[0-9]+)/$', views.task_edit),
     url(r'^api/delete/(?P<pk>[0-9]+)/$', views.task_detail),
     url(r'^api/current_user/$', views.current_user),
     # url(r'^task/new/$', views.task_new, name='task_new'),
